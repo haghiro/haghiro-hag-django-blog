@@ -1,0 +1,87 @@
+{% extends 'myapp/base.html' %}
+
+
+{% block content %}
+<!-- Start your project here-->
+<div class="jumbotron card card-image" style="background-image: url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg);">
+    <!-- "jumbotron text-center mdb-color lighten-2 white-text mx-2 mb-5" -->
+    <!-- Title -->
+    <h2 class="card-title h2">{{ request.site.siteconfig.top_title }}</h2>
+
+    <!-- Subtitle -->
+    <p class="my-4 h6">{{ request.site.siteconfig.top_subtitle }}</p>
+
+    <!-- Grid row -->
+    <div class="row d-flex justify-content-center">
+
+        <!-- Grid column -->
+        <div class="col-xl-7 pb-2">
+
+            <p class="card-text"></p>
+
+        </div>
+        <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
+    <!-- <hr class="my-4 rgba-white-light">
+
+    <div class="pt-2">
+        <button type="button" class="btn btn-outline-white">Buy now <i class="far fa-gem ml-1"></i></button>
+        <button type="button" class="btn btn-outline-white">Download <i class="fas fa-download ml-1"></i></button>
+    </div> -->
+
+</div>
+<!-- Jumbotron -->
+
+<div class="row">
+    <!-- Card deck -->
+    <div class="card-deck">
+
+        {% for item in post_list %}
+        <div class="col-md-4">
+
+            <!-- Card -->
+            <div class="card mb-4">
+
+                <!--Card image-->
+                <div class="view overlay">
+
+                    {% if item.thumbnail %}
+                    <img class="card-img-top" src="{{ item.thumbnail.url }}"
+                    alt="{{ item.title }}">
+
+                    {% else %}
+                    <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg"
+                        alt="{{ item.title }}">
+
+                    {% endif %}
+                    <a href="{% url 'myapp:post_detail' item.id %}">
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                </div>
+
+                <!--Card content-->
+                <div class="card-body">
+
+                    <!--Title-->
+                    <h4 class="card-title">{{ item.title }}</h4>
+                    <p>{{ item.category }}</p>
+                    <!--Text-->
+                    <p class="card-text">{{ item.content|safe|truncatechars_html:50}}</p>
+                    <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                    <a href="{% url 'myapp:post_detail' item.id %}" type="button" class="btn btn-blue btn-md">もっと読む</a>
+                </div>
+
+            </div>
+            <!-- Card -->
+
+        </div>
+        {% endfor %}
+
+    </div>
+    <!-- Card deck -->
+
+</div>
+{% endblock content %}
